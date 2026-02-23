@@ -31,21 +31,23 @@ def show_progress(employee_id):
     todos = get_todos(employee_id)
 
     if not todos:
-        print(f'The employee with the ID {employee_id} has no tasks on their To-do list.')
-  
+        print(f'The employee with the ID {employee["name"]} has no tasks.')
+
     total_tasks = len(todos)
     completed_tasks = [task for task in todos if task['completed']]
 
     num_completed = len(completed_tasks)
 
-    print(f"Employee {employee['name']} is done with tasks({num_completed}/{total_tasks}):")
+    print(f"Employee: {employee['name']}")
+    print(f"Tasks completed ({num_completed}/{total_tasks}):")
+    
     for task in completed_tasks:
         print(f"\t {task['title']}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        print("Usage: python3 0-gather_data_from_an_API.py <id>")
         sys.exit(1)
  
     try:
