@@ -30,26 +30,12 @@ def show_progress(employee_id):
         
     total_tasks = len(todos)
     completed_tasks = [task for task in todos if task['completed']]
-    incomplete_tasks = [task for task in todos if not task['completed']]
     
     num_completed = len(completed_tasks)
-    num_incomplete = len(incomplete_tasks)
     
-    print(f"Employee name: {employee['name']} \nEmployee ID: {employee_id}")
-    print(f"Progress Report: {num_completed}/{total_tasks} tasks completed")
-    
-    print(f"-" * 40) # For Pretty Output 
-    print(f"Completed Tasks: {num_completed}")
+    print(f"Employee {employee['name']} is done with tasks({num_completed}/{total_tasks}):")
     for task in completed_tasks:
-        print(f"\t - {task['title']}")
-        
-    print("\n") # For Pretty Output
-    
-    print(f"Incomplete Tasks: ({num_incomplete})")
-    for task in incomplete_tasks:
-        print(f"\t - {task['title']}")
-    
-    print(f"-" * 40) # For Pretty Output
+        print(f"\t {task['title']}")
     
     
 if __name__ == "__main__":
