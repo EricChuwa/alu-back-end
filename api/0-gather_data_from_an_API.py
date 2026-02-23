@@ -1,61 +1,36 @@
 #!/usr/bin/python3
-
-""" To-do List Progress Reporter
-Fetches data and displays To-list progress for a given ID. """
+"""Script to get todos for a user from API"""
 
 import requests
 import sys
 
 
-API_URL = "https://jsonplaceholder.typicode.com"
+def main():
+    """main function"""
+    user_id = int(sys.argv[1])
+    todo_url = 'https://jsonplaceholder.typicode.com/todos'
+    user_url = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
+
+    response = requests.get(todo_url)
+
+    total_questions = 0
+    completed = []
+    for todo in response.json():
+
+        if todo['userId'] == user_id:
+            total_questions += 1
+
+            if todo['completed']:
+                completed.append(todo['title'])
+
+    user_name = requests.get(user_url).json()['name']
+
+    printer = ("Employee {} is done with tasks({}/{}):".format(user_name,
+               len(completed), total_questions))
+    print(printer)
+    for q in completed:
+        print("\t {}".format(q))
 
 
-def get_employee_data(employee_id):
-    response = requests.get(f"{API_URL}/users/{employee_id}")
-    response.raise_for_status()
-    return response.json()
-
-
-def get_todos(employee_id):
-    response = requests.get(f"{API_URL}/todos?userId={employee_id}")
-    response.raise_for_status()
-    return response.json()
-
-
-def show_progress(employee_id):
-    try:
-        employee = get_employee_data(employee_id)
-    except:
-        print(f'Error: Employee with the ID {employee_id} was not found.')
-
-    todos = get_todos(employee_id)
-
-    if not todos:
-        print(f'The employee with the ID {employee["name"]} has no tasks.')
-
-    total_tasks = len(todos)
-    completed_tasks = [task for task in todos if task['completed']]
-
-    num_completed = len(completed_tasks)
-
-    print(f"Employee: {employee['name']}")
-    print(f"Tasks completed ({num_completed}/{total_tasks}):")
-
-    for task in completed_tasks:
-        print(f"\t {task['title']}")
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 0-gather_data_from_an_API.py <id>")
-        sys.exit(1)
-
-    try:
-        employee_id = int(sys.argv[1])
-        if employee_id <= 0:
-            raise ValueError
-    except ValueError:
-        print("Error: Employee ID must be a positive Integer.")
-        sys.exit(1)
-
-    show_progress(employee_id)
+if __name__ == '__main__':
+    main()
