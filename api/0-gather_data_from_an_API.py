@@ -3,6 +3,7 @@
 """ To-do List Progress Reporter
 Fetches data and displays To-list progress for a given ID. """
 
+import sys
 import requests
 
 API_URL = "https://jsonplaceholder.typicode.com"
@@ -39,6 +40,17 @@ def show_progress(employee_id):
     
     
 if __name__ == "__main__":
-    employee_id = input("Enter the Employee ID: ")
+    if len(sys.argv) != 2:
+        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
+        
+    try:
+        employee_id = int(sys.argv[1])
+        if employee_id <= 0:
+            raise ValueError
+    except ValueError:
+        print("Error: Employee ID must be a positive Integer.")
+        sys.exit(1)
+        
     show_progress(employee_id)
     
