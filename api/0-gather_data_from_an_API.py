@@ -40,7 +40,7 @@ def show_progress(employee_id):
 
     print(f"Employee: {employee['name']}")
     print(f"Tasks completed ({num_completed}/{total_tasks}):")
-    
+  
     for task in completed_tasks:
         print(f"\t {task['title']}")
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python3 0-gather_data_from_an_API.py <id>")
         sys.exit(1)
- 
+
     try:
         employee_id = int(sys.argv[1])
         if employee_id <= 0:
