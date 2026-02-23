@@ -40,7 +40,7 @@ def show_progress(employee_id):
 
     print(f"Employee: {employee['name']}")
     print(f"Tasks completed ({num_completed}/{total_tasks}):")
-  
+
     for task in completed_tasks:
         print(f"\t {task['title']}")
 
